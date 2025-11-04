@@ -12,7 +12,6 @@ import {
 } from './api/todos';
 import { Todo } from './types/todo';
 import { useState } from 'react';
-// import { client } from './utils/fetchClient';
 import cn from 'classnames';
 import { TodoFilter } from './types/filters';
 import { ErrorTypes } from './types/errorTypes';
@@ -48,11 +47,11 @@ export const App: React.FC = () => {
       })
       .catch(() => {
         setError(ErrorTypes.LoadTodos);
-        const timeoutId = setTimeout(() => {
-          setError(null);
-        }, 3000);
+        // const timeoutId = setTimeout(() => {
+        //   setError(null);
+        // }, 3000);
 
-        return () => clearTimeout(timeoutId);
+        // return () => clearTimeout(timeoutId);
       })
       .finally(() => {
         setLoading(false);
@@ -227,7 +226,7 @@ export const App: React.FC = () => {
       // eslint-disable-next-line @typescript-eslint/no-shadow
     } catch (error) {
       setError(ErrorTypes.UpdateTodo);
-      throw error; // Пробрасываем ошибку
+      throw error;
     } finally {
       setUpdatingIds(prevIds =>
         prevIds.filter(updatingId => updatingId !== id),
@@ -299,8 +298,6 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      {/* DON'T use conditional rendering to hide the notification */}
-      {/* Add the 'hidden' class to hide the message smoothly */}
       <div
         data-cy="ErrorNotification"
         className={cn(
