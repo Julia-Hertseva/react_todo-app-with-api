@@ -42,10 +42,11 @@ export const TodoList: React.FC<Props> = ({
         <Todo
           todo={tempTodo}
           onDeleteTodo={onDeleteTodo}
-          deletingIds={[0]}
-          updatingIds={[]}
+          deletingIds={[]}
+          updatingIds={[tempTodo.id]}
           editingId={null}
           setEditingId={setEditingId}
+          onUpdateTodo={onUpdateTodo}
         />
       )}
     </section>
