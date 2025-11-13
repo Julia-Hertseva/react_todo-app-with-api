@@ -6,22 +6,22 @@ type Props = {
   visibleTodos: TodoType[];
   tempTodo: TodoType | null;
   onDeleteTodo: (id: number) => void;
-  deletingIds: number[];
-  updatingIds: number[];
+  deletingTodoIds: number[];
+  updatingTodoIds: number[];
   onUpdateTodo: (id: number, updatedTodo: Partial<TodoType>) => void;
   editingId: number | null;
-  setEditingId: (id: number | null) => void;
+  onEditingIdChange: (id: number | null) => void;
 };
 
 export const TodoList: React.FC<Props> = ({
   visibleTodos,
   tempTodo,
   onDeleteTodo,
-  deletingIds,
-  updatingIds,
+  deletingTodoIds,
+  updatingTodoIds,
   onUpdateTodo,
   editingId,
-  setEditingId,
+  onEditingIdChange,
 }) => {
   return (
     <section className="todoapp__main" data-cy="TodoList">
@@ -30,11 +30,11 @@ export const TodoList: React.FC<Props> = ({
           key={todo.id}
           todo={todo}
           onDeleteTodo={onDeleteTodo}
-          deletingIds={deletingIds}
-          updatingIds={updatingIds}
+          deletingTodoIds={deletingTodoIds}
+          updatingTodoIds={updatingTodoIds}
           onUpdateTodo={onUpdateTodo}
           editingId={editingId}
-          setEditingId={setEditingId}
+          onEditingIdChange={onEditingIdChange}
         />
       ))}
 
@@ -42,10 +42,10 @@ export const TodoList: React.FC<Props> = ({
         <Todo
           todo={tempTodo}
           onDeleteTodo={onDeleteTodo}
-          deletingIds={[]}
-          updatingIds={[tempTodo.id]}
+          deletingTodoIds={[]}
+          updatingTodoIds={[tempTodo.id]}
           editingId={null}
-          setEditingId={setEditingId}
+          onEditingIdChange={onEditingIdChange}
           onUpdateTodo={onUpdateTodo}
         />
       )}

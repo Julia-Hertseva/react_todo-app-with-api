@@ -6,21 +6,21 @@ import '../../styles/todo.scss';
 type Props = {
   todo: TodoType;
   onDeleteTodo: (id: number) => void;
-  deletingIds: number[];
+  deletingTodoIds: number[];
   onUpdateTodo: (id: number, updatedTodo: Partial<TodoType>) => void;
-  updatingIds?: number[];
+  updatingTodoIds?: number[];
   editingId: number | null;
-  setEditingId: (id: number | null) => void;
+  onEditingIdChange: (id: number | null) => void;
 };
 
 export const Todo: React.FC<Props> = ({
   todo,
   onDeleteTodo,
-  deletingIds,
+  deletingTodoIds,
   onUpdateTodo,
-  updatingIds,
+  updatingTodoIds,
   editingId,
-  setEditingId,
+  onEditingIdChange,
 }) => {
   const [editedTitle, setEditedTitle] = useState(todo.title);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,7 +47,7 @@ export const Todo: React.FC<Props> = ({
     }
 
     if (trimmedTitle === todo.title) {
-      setEditingId(null);
+      onEditingIdChange(null);
 
       return;
     }
@@ -55,9 +55,9 @@ export const Todo: React.FC<Props> = ({
     try {
       if (onUpdateTodo) {
         await onUpdateTodo(todo.id, { title: trimmedTitle });
-        setEditingId(null);
+        onEditingIdChange(null);
       } else {
-        setEditingId(null);
+        onEditingIdChange(null);
       }
     } catch (error) {}
   };
@@ -67,7 +67,7 @@ export const Todo: React.FC<Props> = ({
       handleSubmit();
     } else if (event.key === 'Escape') {
       setEditedTitle(todo.title);
-      setEditingId(null);
+      onEditingIdChange(null);
     }
   };
 
@@ -109,7 +109,7 @@ export const Todo: React.FC<Props> = ({
           <span
             data-cy="TodoTitle"
             className="todo__title"
-            onDoubleClick={() => setEditingId(todo.id)}
+            onDoubleClick={() => onEditingIdChange(todo.id)}
           >
             {todo.title}
           </span>
@@ -125,12 +125,12 @@ export const Todo: React.FC<Props> = ({
         </>
       )}
 
-      {/* overlay will cover the todo while it is being deleted or updated */}
       <div
         data-cy="TodoLoader"
         className={cn('modal overlay', {
           'is-active':
-            deletingIds.includes(todo.id) || updatingIds?.includes(todo.id),
+            deletingTodoIds.includes(todo.id) ||
+            updatingTodoIds?.includes(todo.id),
         })}
       >
         <div className="modal-background has-background-white-ter" />

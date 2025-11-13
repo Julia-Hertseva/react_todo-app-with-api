@@ -1,4 +1,4 @@
-import { Todo } from '../types/todo';
+import { Todo } from '../types/todo1';
 import { client } from '../utils/fetchClient';
 
 export const USER_ID = 3622;
